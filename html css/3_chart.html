@@ -1,0 +1,81 @@
+<!--
+    - npm방식 : nodejs스타일로 설치
+        - 주로 앱이나 백엔드 서버를 위한 방식
+    - CDN방식 : 프런트엔드에서 간단하게 구성하기 위해 사용
+        - 링크만 연결하는 것으로 사용 가능
+
+    - JS의 주요 통신 라이브러리
+        - 기본, html5에서 지원 : fetch()
+            - 별도 설치 필요없다, 모든 브라우저 지원
+        - 서브파ㅌ, 라이브러리 : axios(), ...
+            - 한번 불러와야함, 성능이 더 우수하고 기능이 더 많은 경우가 많음
+-->
+
+<html>
+<head></head>
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <!--chartjs 라이브러리 연결 | 차트 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--axios 라이브러리 연결 ㅣ 통신-->
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script> 
+    <script>
+        // 여기서 차트 관련 코드 삽입
+        // 0. 별도의 트리거(버튼, 검색) 없이 진행
+        // 1. 차트를 랜더링할 요소 특정
+        const chartCanvas = document.querySelector('#myChart');
+
+        // 2. 어떤 데이터를 시각화할 것인지? 보통 서버에서 가져옴
+        // http://127.0.0.1:5500/html%20css/data/sales.json 요청해서 결과를 가져온다
+        // I/O 통신(Network) -> 비동기 -> ajax, 근데 복잡하니까 라이브러리 사용
+        // npmjs.com에서 axios 검색, CDN방식으로 가져오기
+        axios.get("http://127.0.0.1:5500/html%20css/data/sales.json")
+            .then(res => {
+                console.log('통신결과', res);
+                const { data } = res
+                console.log(data);
+
+                // 차트생성
+                makeChart(data);
+            })
+            .catch(err => {
+                alert('통신오류');
+            });
+
+    function makeChart(data) {
+        // 3. 데이터를 차트에 적용 -> 데이터 가공 -> 배열/객체 등
+        let dataLabels = data.map(sale => sale.label);
+        // console.log(dataLabels);
+        let dataValues = data.map(sale => sale.data);
+        // console.log(dataValues)
+        // (4) 차트 갱신 or 새로고침
+
+        new Chart(chartCanvas, {
+            type: 'bar',
+            data: {
+                // label -> ['A', 'B', 'C', ...]
+                // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels : dataLabels,
+                datasets: [{
+                    label: '# of Votes',
+                    // data -> [700, 500, 300, ...]
+                    // data: [12, 19, 3, 5, 2, 3],
+                    data: dataValues,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--  
+    - 위의 표현은 HTML5의 표식, 이 문서는 HTML5로 작성되었다를 의미
+    - 브라우저가 HTML 문서를 파싱하여 메모리 로드 후 화면 랜더링 처리할 때 사용
+    - 생략가능
+    - !DOCTYPE root element를 표기하는 것이 표준 -> DTD형식으로 문법 규정
+        - HTML5 문서는 html로 시작하고 /html로 끝난다
+    - element
+        - start tag, content, end tag로 구성
+        - start tag : 태그명, n개의 속성[=속성값]
+    - 태그
+        - 시작태그 : <요소명|태그명>
+        - 종료태그 : </요소명|태그명>
+    - 기본 규칙
+        - 오버랩 금지
+            <div> <a> </div> </a>
+
+-->
+<html>
+    <!-- head, body로 html하위에 구성한다-->
+<head>
+    <!-- head에는 HTML문서의 메타정보가 들어간다
+        - 문서제목, 뷰포트(화면크기), 인코딩, 검색시 키워드, 아이콘, ...
+        - css, js를 포함할 수 있다-->
+</head>
+<body>
+    <!-- 화면에 보이는 실제 정보/내용을 기술
+        - css, js를 포함할 수 있다 (최신 js는 body닫기 태그 위에 주로 작성)
+        
+        - 브라우저 개발모드 -> crtl + shift + i / command + option + i
+    -->
+        <div>
+            <!-- 기본 블럭, 안에 내용이 없으면 존재하지 않는다-->
+            hello html
+            
+        </div>
+</body>
+</html>

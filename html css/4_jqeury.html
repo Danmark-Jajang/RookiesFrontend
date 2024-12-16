@@ -1,0 +1,71 @@
+<!-- 
+    - jQuery를 통해 JS의 표현을 간결하게 해보기
+        - 로그인 시도에 대한 시뮬레이션 진행
+        - html로 로그인 시도시 화면 전환이 발생
+        - js로 로그인 -> ajax를 사용 -> 화면전환 x, 백단에서 처리됨
+    - chart 적용도 해보기
+    - css selector 나머지 규칙 실습
+-->
+<html>
+<head></head>
+<body>
+    <!-- jQuery 설치 
+        - 여러 버전을 다양한 방법으로 가져올 수 있다. 구글에서 제공하는 방법을 사용
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- chartjs 설치-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div>
+        <form method="post" id="formSend"> <!-- action이 없으면 현재 페이지가 전송 URL이 된다-->
+            <p>로그인</p>
+            <input type="text" placeholder="아이디" id="uid"/>
+            <input type="password" placeholder="비밀번호" id="upw"/>
+            <!-- 로그인을 하게 하는 트리거
+                - 클릭 -> 이벤트 발생 -> submit 
+            -->
+            <input type="submit" value="login"/>
+        </form>
+    </div>
+    <script>
+        /**
+         * jQuery 기본 문법
+         *  - 변수(html element) 표현 방법 : $('css selector|키워드')
+         *  - 기능
+         *      - element조작 (html 동적 구성)
+         *      - 통신(네트워크 -> ajax 중심 통신)
+         *      - css 스타일 동적으로 쉽게 적용 가능
+         *      - 이벤트 처리
+         *      - ...
+         * 
+         */
+        // 1. submit 이벤트를 재정의하여 이벤트 발생이 인터셉트
+        // 이벤트가 발생되는 주체를 특정 후 submit이벤트 재정의
+        $('#formSend').on('submit', event=>{
+            // js에서 임의로 컨트롤 하기 위해선 submit 이벤트를 없애야한다
+            //      submit을 유지하면 화면이 전환되기 때문
+            event.preventDefault();
+            // 이벤트가 발생한 상황만 활용하고 로그인 처리는 ajax로 처리하기 위함
+            console.log('로그인 처리명령');
+            // 로그인 처리 + ajax 
+            $.get({
+                // 서버주소, 전달방식, 데이터, 응답데이터 형식, 통신성공/실패 처리법
+                //url     :"/login", //더미주소, 실제면 서버주소를 넣을 것
+                url:"http://127.0.0.1:5500/html%20css/data/sales.json",
+                //method  :"",
+                // 객제와 문자열 사이에는 직렬화/역직렬화가 있음
+                data    :$('#formSend').serializeArray(),
+                dataType:"json", //응답의 형태 : text, xml, json, ...
+                success :(data)=>{
+                    console.log('성공', data);
+                }, //통신 성공 -> .then()
+                error   :(err)=>{
+                    console.log('실패', err);
+                }  //통신 실패 -> .catch()
+            });
+
+            return false;
+        }); //on('이벤트명', 콜백함수') -> 이벤트 정의 담당
+
+    </script>
+</body>
+</html>

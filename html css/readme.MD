@@ -1,0 +1,171 @@
+# 프런트엔드 구조
+    - 프런트엔드
+        - 기본 구성원
+            - html + css + javascript
+                - html : 구조(뼈대), 컨텐츠 포함
+                - css3 : 레이아웃, 디자인, 반응형, 에니메이션
+                - javascript : 인터렉션, 이벤트, 통신, 동적화면 구성
+                    - 기존 수업은 nodejs기반 문법수업
+                    - html, css와 연계하는 것은 6일부터 진행할 것
+        - 방식
+            - 브라우저를 통해 유저가 보는 화면의 랜더링 방식
+                - SSR(Server Side Rendering)
+                    - 서버(backend)에서 화면을 모두 완성하여 전송
+                    - 전통적 방식
+                    - springBoot, nodejs, .net, ...
+                - CSR(Clinet Side Rendering)
+                    - 브라우저에서 화면이 완성됨
+                    - 랜더링 부하가 클라이언트로 이동됨
+                    - reactjs/vuejs -> SPA(Single Page Application)
+                - 이외 더 있음
+
+# HTML
+    - Hyper Text Markup Language
+    - 구조, 뼈대, '컨텐츠==데이터'를 가지고 있다
+    - 웹
+        - 구조 + 데이터 -> 반정형 데이터
+    - 데이터
+        - 웹스크래핑/웹크롤링 -> 데이터 수집 대상
+    - 각 태그의 용도
+    - html5
+        - 1995년 최초 고안
+            - HTML4가 2015년 이전까지 주력으로 사용했고, 지금은 HTML5
+        - 2008 드래프트 이후 2009~10 적용
+        - 스마트폰 보급 및 확산 시기
+    - 구조
+        - 1_basic.html
+    - 주요 태그
+        - 기본
+            - DOCTYPE : html문서 작성 문법을 정의한 DTD
+            - html : 문서의 시작과 끝
+            - head : html의 메타정보
+            - body : 화면에 보이는 정보 기술
+        - 구조
+            - div : 영역 구분 -> 레이아웃
+            - table, theader, tbody, tr, td, th : 테이블 -> 게시판
+        - 입력
+            - form, input, select, textarea, radio, ...
+            - 사용자로부터 데이터를 '입력'받는다
+                - 주로 form과 연계하여 작성(가장 바깥쪽 통신의 경계)
+        - 전송
+            - form
+            - 서버로 데이터를 '전송'한다
+        - 정보 표시
+            - 텍스트
+                - p, span, ...
+            - 멀티미디어
+                - img, video, audio, ...
+            - 이동
+                - a : 링크
+            - 이벤트(트리거 역할)
+                - button
+            - 외부 자원 참조(HTML 내부로 적용)
+                - script, style, ...
+                - external 방식으로 html에 참조
+                - internal 방식으로 html내에서 직접 구현
+            - 2D/3D 랜더링
+                - canvas : 차트, 게임(빈도가 낮음, 기타 엔진으로 작동)
+
+# 개별기능
+    - HTML, JS 연동
+        - 2_html_js.html, 2_html_js_2.html
+        - SSR기준 : HTML에 JS와 css를 연결시키는 방법
+            - external
+                - *.js, *.html로 파일 존재
+                - <script src="@@.js"> 방식으로 가져옴
+            - internal
+                - *.html 하나만 존재
+                - <script> ... </script> 안에 작성
+            - inline
+                - html element에 직접 작성(속성으로)
+                - <button onclick="xxx()">로그인</button>
+
+# css selector
+    - css에서 element를 특정하는 기법
+    - css slector 이해(수동), 개발자도구로 자동으로 찾기(자동)
+    - 규칙(우선순위)
+        - 아이디값
+            - 문서에서 고유한 값을 갖는다
+            - html : <요소명 id="아이디값">
+            - css selector : #아이디값
+        - 클래스값
+        - 요소명
+        - 조합(위의 표현)
+        - 열거
+        - 서열
+        - 기타
+            - 의사결정
+            - 속성 셀렉터
+        - 5_jquery_css_selector.html
+
+# html 내 통신
+    - protocol : 웹페이지 - http, https
+    - html
+        - form 태그
+            - 폼 전송
+            - 데이터 전송 방법(method)
+                - get, post, put, delete, ...
+            - 화면이 깜빡인다 -> 새로고침
+            - 2_html_js_2.html
+        - a 태그
+            - link를 걸어 사이트 이동
+            - 데이터 전송 방법(method)
+                - get
+            - 화면이 깜빡인다 -> 새로고침
+        - 주요 메소드
+            - get : 소량의 데이터 전송, 보안이 중요하지 않을 때
+                - 프로토콜의 헤더에 데이터를 전달
+                - URL에 데이터가 담기므로 데이터가 노출된다
+                - ex.  http://www.naver/com/api/news?id=23141234
+                - 주소/링크?매개변수(키=값&키=값...)
+            - post : 대량의 데이터, 보안이 중요, 파일 업로드
+                - 프로토콜의 바디에 데이터를 전달
+                - 데이터를 프로토콜 내에 담기 때문에 노출이 되지 않는다
+                - 바디를 이용해 데이터를 전송 -> 단편화기능 제공
+    - JS로 전송(요청)
+        - ajax
+            - 모든 메소드 방식 지원
+            - xml전송을 목표, 비동기처리, 백그라운드 통신 설계
+                - 데이터 포멧 트렌드가 xml -> json
+            - open api 회사들
+                - xml, json 모두 지원 -> restful 방식 백엔드 구성
+            - txt 포멧이면 모두 지원 가능
+                - txt는 사람, 컴퓨터, 프로그램 모두가 이해가능하다
+            - 더보기 -> 화면 새로고침없이 데이터를 불러옴
+
+    - http 요청 응답코드
+        - 100번대 : 정보응답
+        - 200번대 : 200(정상)
+        - 300번대
+        - 400번대 : 404(페이지 없음), 405(해당 메소드 지원X) <- client 에러
+        - 500번대 : 서버측 에러
+
+# 차트 그리기
+    - 대시보드용, 수입된 데이터를 이용해 시각화를 하여 분석, 관제 수행
+    - 차트용 라이브러리
+        - 유료, 무료 많음 -> JS
+        - 무료
+            - charjs
+            - 3_chart.html
+
+# 기본 html, css컨셉
+    - html 기본 구성 이해, 필요한 html요소들을 사용할 때 체크
+    - css
+        - UI 구성할 때 사용 -> 백엔드에서 체크하고, 무료 템플릿을 활용할 것이다
+        - css selector를 확인
+            - 스타일 기본 적용
+        - 반응형, 애니메이션은 생략
+            - 무료 템플릿에 있으면 그대로 활용
+            - https://getbootstrap.kr/
+
+# jQuery
+    - js framework
+    - js의 표현을 간결하게 대체할 수 있는 제품
+    - 2008/9년부터 현재까지 계속 사용중, 2015년 이전까지는 엄청난 점유율 가졌다
+    - 활용
+        - SSR 중심으로 웹서비스 구성 시 활용빈도가 높다
+        - SPA를 사용하지 않는 전통적인 웹서비스
+        - 현재는 순수 JS로 사용하는 경우도 많다
+    - 실습
+        - 2_html_js.html을 jQuery를 적용하여 간결하게 구성해볼 것
+        - 4_jquery.html

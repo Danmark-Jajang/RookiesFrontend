@@ -1,0 +1,69 @@
+<!-- 
+    HTML컨텐츠에 js를 연결하여 이벤트, 통신 등 html 인터렉션 처리
+    1. 뼈대 준비
+    2. JS 세팅 -> 인터렉션 처리
+-->
+
+<html>
+<head>
+
+</head>
+<body>
+    <!-- 사용자 입력 -> 아이디 비번을 많이들 받는다 -->
+    <!-- type은 입력받은 데이터를 가장 효과적으로 입력할 수 있도록
+        키보드 조정 -> 모바일에서는 가상 키보드 레이아웃 조절
+        입력 데이터의 목적에 맞게 조정한다
+        기본은 text, password, number, date, time, email, ...-->
+
+        <!-- 로그인 입력 화면-->
+    <div>
+        <!-- 페이지 목적에 따른 정보 제공 -->
+        <p>로그인</p>
+        <input type="text" placeholder="아이디" id="uid"/> <!-- 단독태그 형태, 열고닫는것 없이 태그 하나로 처리-->
+        <input type="password" placeholder="비밀번호" id="upw"/>
+        <!-- 목적 달성을 위한 도구 제공 -->
+        <button onclick="()=>{console.log(this)}">로그인(inline)</button>
+        <button id="btnLogin">로그인(internal)</button>
+        <!-- 버튼 클릭 ->  이벤트 발생 -> 인터렉션 발생 -> 누군가가 처리(js)-->
+        <!-- 
+            <로그인 처리 작업 순서> [전부 JS로 처리]
+            로그인 버튼 찾기(css selector)
+                #btnLogin
+            로그인 버튼에 이벤트 등록(click event)
+            이벤트 발생 -> 입력값 추출
+            입력값 -> server 전송 (http통신)
+        -->
+        <script>
+            // 여기서부턴 JS코드를 따름, 주석 방식도 달라짐
+            // 현재 internal 방식
+            // 로그인 함수
+            function login() {
+                console.log(`로그인 버튼 클릭`)
+            }
+
+            //1. 로그인 버튼 특정
+            // old한 방식 / 순서 id값 사용
+            // const btn = document.getElementById("btnLogin");
+
+            // html5부터 지원하는 방식
+            const btn = document.querySelector('#btnLogin');
+            // 서드파트 방식 라이브러리 사용은 jQuery방식이 있다 -> 간단하게 구성됨
+            // https://survey.stackoverflow.co/2022/#most-popular-technologies-webframe
+
+
+            btn.addEventListener('click', ()=>{
+                //alert('login'); // 팝업창
+                // id와 pw 입력요소를 특정하라
+                const uid = document.querySelector('#uid');
+                const upw = document.querySelector('#upw');
+                alert(`id:${uid.value} / password:${upw.value}`);
+
+                // 서버로 데이터 전송
+                // JS -> ajax -> api 존재(함수있음), 순수 JS코드가 복잡함
+                // html로 전달하거나 js 프레임워크 사용(thirdpart)
+            });
+        </script>
+    </div>
+    
+</body>
+</html>

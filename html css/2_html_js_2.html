@@ -1,0 +1,46 @@
+
+<html>
+<head>
+
+</head>
+<body>
+    <!-- html에서 전송 : form-->
+    <div>
+        <p>로그인(get)</p>
+        <!-- action이 생략되는 경우 있음 -> 현재페이지가 주소가 됨 -->
+        <form action="/login", method="get">
+            <!-- 키를 반드시 지정해야 데이터가 전달된다 , name속성으로 키부여
+                통상 id와 name은 동일하게 설정(편하니까)
+                http://127.0.0.1:5500/login?uid=asdf&upw=1234 <-GET방식
+                404 Not Found Error 
+            -->
+            <input type="text" placeholder="아이디" id="uid" name="uid"/>
+            <input type="password" placeholder="비밀번호" id="upw" name="upw"/>
+            <!-- submit 유형이 데이터 전송 트리거역할-->
+            <button type="submit" id="btnLogin">로그인(internal)</button>
+        </form>
+    </div>
+
+    <div>
+        <p>로그인(post)</p>
+        <!-- 데이터를 protocol의 body쪽에 숨겨서 전송 
+            405 Not Allowed Error
+            http://127.0.0.1:5500/login <- 데이터가 보이지 않음 
+        -->
+        <form action="/login", method="post">
+            
+            <input type="text" placeholder="아이디" id="uid" name="uid"/>
+            <input type="password" placeholder="비밀번호" id="upw" name="upw"/>
+            <button type="submit" id="btnLogin">로그인(internal)</button>
+        </form>
+    </div>
+
+    <div>
+        <!-- 
+            - 기능 : 링크 전송 -> a tag / GET방식 요청
+            - 속성 : href="URL?키=값..."    
+        -->
+         <a href="https://www.naver.com">페이지 이동 | get 방식 요청 | 데이터 전송 시 노출</a>
+    </div>
+</body>
+</html>

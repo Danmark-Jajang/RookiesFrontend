@@ -1,0 +1,7 @@
+// 스타일 자체를 변수처럼 사용, $를 사용해서 표시
+// 스타일에 의미있는 내용을 부여할 수 있다
+$title-color: blue;
+
+.title{
+    color: $title-color,
+}

@@ -1,0 +1,163 @@
+<!-- css selector 나머지 규칙 실습 
+    - selector 문법
+        - 아이디값
+        - 클래스값
+        - 요소명
+        - 조합
+        - 열거
+        - 서열
+            - 직계 : >
+            - 후손 : (한칸 공백)
+        - 기타
+            - 의사결정
+            - 속성설렉타
+    - jquery사용
+-->
+
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        /* css 스타일 정의, internal방식 */
+        /* 클래스는 여러 디자인을 묶어서 한가지 형태의 스타일을 제공 */
+        .myStyle {
+            color:aqua;
+            background-color: dodgerblue;
+            font-style: italic;
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+        <h2 id="subject">제목</h2> <!-- 제목을 표기하는 태그 -->
+        <h2>내용</h2>
+        <h2 class="myStyle">클래스 적용1</h2>
+        <p class="myStyle">클래스 적용2</p>
+        <p class="demo">요소명</p>
+        <span>내용</span>
+        <h4>제목4</h4>
+        <ol>
+            <!-- list, ul | ol / 성분은 li가 담당-->
+            <li>A</li>
+            <li>B</li>
+            <li>C
+                <ul>
+                    <li>ㄱ</li>
+                    <li>ㄴ</li>
+                    <li>ㄷ</li>
+                </ul>
+            </li>
+        </ol>
+
+        <!-- 정보를 표현, 목록형태로 표현, 검색결과 ex)게시판-->
+        <table border="1">
+            <thead> <!-- 컬럼명, 데이터가 어떤 의미를 가지는지 맨 위에 한줄 -->
+                <tr>
+                    <th>no</th>
+                    <th>제목</th>
+                    <th>요약</th>
+                </tr>
+            </thead>
+            <tbody> <!-- 데이터 표현, tr이 데이터 1개 -->
+                <tr>
+                    <td>1</td>
+                    <td>월요일</td>
+                    <td>첫 날</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>크리스마스</td>
+                    <td>휴무</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>크리스마스</td>
+                    <td>휴무</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>크리스마스</td>
+                    <td>휴무</td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <br/>
+            <input type="text", name="uid"/>
+        </div>
+    </div>
+    <script>
+        // 모든 요소 : * (wildcard), 서열관계 테스트를 위해 더미로 세팅
+        //  모든 요소의 글자색을 검은색으로 세팅한다, 실제로 잘 사용 안함
+        $('*').css('color','black');
+
+        // 여기서 html 요소를 특정하여 css 스타일 적용
+        // 1. 아이디 지정 -> 특정하는 것 / 문서 내에서 고유한 값을 가짐
+        // 문법 : #아이디값
+        console.log($('#subject'));
+        $('#subject').css('color','red') // 글자 색을 빨간색으로 지정
+
+        // 2. 클래스 지정 -> 여러 요소에 동일한 스타일 적용
+        //  동일 element / 다른 element에도 적용 가능
+        //  style="키:값'", "키:값", ...  class="여러스타일이 묶여 있는 하나의 디자인"
+        //  문법 : .클래스값
+        //  이 문서의 모든 요소 중에 클래스가 myStyle인 요소들
+        //  css 적용 순위 : external < internal < inline
+        //              오른쪽으로 갈수록 우선순위가 높음
+        $('.myStyle').css('color', 'magenta');
+
+        // 3. 요소명
+        //  요소의 이름으로 특정하기, 여러 개의 요소가 선택될 수 있다
+        //  문법 : 요소명
+        //  이 문서의 모든 요소 중에 모든 p태그를 찾아라
+        $('p').css('color', 'red');
+
+        // 4. 조합
+        //  아이디, 클래스, 요소명, ...등의 모든 표현법을 합쳐서 묘사
+        //  h2#subject : 모든 h2중 아이디가 subject인 것들
+        //  h2.myStyle : 모든 h2중 클래스가 myStyle인 것들
+        //  속성명 표기법
+        //      순수 css에서는 background-color
+        //      js/react에서는 카멜 표기법 사용
+        $('h2.myStyle').css('backgroundColor', 'yellow');
+        $('h2#subject').css('backgroundColor', 'gold');
+
+        // 5. 열거
+        //  공통점이 없는 요소들을 한꺼번에 선택할 때
+        //  문법 : css selector, css selector, ...
+        $('p.demo, span, h4').css('color', 'green');
+        //  웹브라우저 코드를 보면 inline형식으로 코드가 추가됨
+        //  css 속성을 inline방식으로 적용시킨다 -> 가장 우선순위로 스타일 적용됨
+
+        // 6. 서열
+        //  부모와 자식간의 관계
+        //  xxML -> 구조표현을 트리형식, 서열관계를 표현
+        //  id나 클래스값으로 특정이 안되면 위로 올라가면서 특정하게 된다
+        //  규칙이 생각이 안난다면 아무 웹페이지 들어가서 selector복사로 확인하기
+        //  <div><p1>  1  </p></div>
+        //  문법
+        //      부모/자식 : 부모>자식 (직계관계에서만)
+        //      루트/요소 : 루트 후손 (한 칸 띄어쓰기)
+        //  문서상에 있는 모든 ol중에 li가 있다면, 그 li의 글자색을 빨간색으로 변경
+        $('ol > li').css('color', 'red');
+        // 후손 특정 / 그 아래 후손도 선택된다
+        $('ol li').css('color', 'blue');
+
+        // 7. 의사결정 셀렉터 -> table요소에서 많이 사용
+        //  반복적인 요소가 등장 -> 부모:자식(반복)의 형태로 특정할 수 있다
+        //  자식들의 서열관계를 특정(첫째, n번째, n번째 이상/이하,...)
+        //  문서에 있는 모든 테이블 중에 실 데이터를 모두 찾아 첫번째 데이터만 추출
+        //  1번부터 시작(0 아님!!!!!)
+        $('table > tbody > tr:first > td').css('color','red')
+        $('table > tbody > tr:even').css('backgroundColor', 'lightgray');
+        $('table > tbody > tr:nth-child(2) > td').css('color', 'blue')
+        // first, last, even, odd, eq(index), lt(index), gt(index)
+        // nth-child(순번) : 특정번째 요소, 브라우저별로 표현이 다를 수 있다
+
+        // 8. 속성 셀렉터 -> input요소에서 많이 사용
+        //  문법 : (css selector과 결합 가능) + [속성명=속성값]
+        $('input[name=uid]').css('backgroundColor','lightgreen')
+    </script>
+</body>
+</html>
