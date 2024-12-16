@@ -657,15 +657,39 @@
             ```
                 git init
                     - 로컬 저장소를 만들고 초기화, .git 폴더 생성
+
                 git add README.md
                     - 저장소에 추가/수정된 파일을 스테이징 해라
                     - git add . : 현재 디렉토리에 있는 모든 파일을 스테이징
                         .gitignore파일에서 지정된 파일을 제외
                     - chages <-> staged file
+
                 git commit -m "first commit"
+                    - commit : github와 동기하기 전 최종 상태
+                        메시지 기입(나중에 규칙에 맞게)
+                    - 로컬 저장소에 저장됨 > github에 올려야함
+
                 git branch -M main
+                    - 브런치의 이름을 main으로 변경/필요시 1회만 진행
+                    - branch : main 개발 줄기, 가지치기로 모듈별로 관리 가능
+
                 git remote add origin git@github.com:Danmark-Jajang/RookiesFrontend.git
+                    - 로컬 저장소를 원격 저장소와 연결
+
                 git push -u origin main
+                    - push : 로컬저장소의 변경된 내용을 원격저장소로 이동
+                    - push <-> pull
             ```
             4. 형상관리
+                - 개인
+                    - 컴퓨터 구동
+                        - 수정된 내용 로컬 저장소 기준으로 최신화
+                            - git pull
+                        - 작업 -> 수정 및 추가
+                            - git add .
+                        - 커밋
+                            - git commit -m "Feat: xx"
+                        - 푸시 - 원격 저장소 반영
+                            - git push
+                
             
